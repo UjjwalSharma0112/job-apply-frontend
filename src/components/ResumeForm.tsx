@@ -8,8 +8,8 @@ const ResumeForm: React.FC = () => {
     firstname: '',
     lastname: '',
     email: '',
-    phonenumber_prefix: '',
-    phonenumber_number: '',
+    phonenumber_prefix: null,
+    phonenumber_number: null,
     location: '',
     preferredDesignation: '',
     resume: null,
@@ -42,8 +42,8 @@ const ResumeForm: React.FC = () => {
         lastname: formData.lastname,
         email: formData.email,
         phonenumber: {
-          prefix: formData.phonenumber_prefix,
-          number: formData.phonenumber_number,
+          prefix: Number(formData.phonenumber_prefix),
+          number: Number(formData.phonenumber_number),
         },
         location: formData.location,
         preferredDesignation: formData.preferredDesignation,
@@ -56,7 +56,7 @@ const ResumeForm: React.FC = () => {
       }
 
       const response = await axios.post<SubmissionResponse>(
-        'http://localhost:3000/user/submit-form',
+        'https://job-apply-backend.onrender.com/user/submit-form',
         submitData,
         {
           headers: {
@@ -91,9 +91,7 @@ const ResumeForm: React.FC = () => {
           <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-6">
             <Check className="w-8 h-8 text-emerald-600" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            Resume Submitted Successfully!
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">Resume Submitted Successfully!</h2>
           <p className="text-gray-600 mb-6">
             Your access token has been generated. Please copy and save it securely.
           </p>
@@ -117,9 +115,7 @@ const ResumeForm: React.FC = () => {
                 )}
               </button>
             </div>
-            <p className="text-sm font-mono bg-white p-3 rounded mt-2 break-all">
-              {accessToken}
-            </p>
+            <p className="text-sm font-mono bg-white p-3 rounded mt-2 break-all">{accessToken}</p>
           </div>
           <button
             onClick={() => {
@@ -129,8 +125,8 @@ const ResumeForm: React.FC = () => {
                 firstname: '',
                 lastname: '',
                 email: '',
-                phonenumber_prefix: '',
-                phonenumber_number: '',
+                phonenumber_prefix: 0,
+                phonenumber_number: 0,
                 location: '',
                 preferredDesignation: '',
                 resume: null,
@@ -150,9 +146,7 @@ const ResumeForm: React.FC = () => {
       <div className="bg-white rounded-2xl shadow-xl overflow-hidden max-w-2xl w-full">
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 p-8 text-white">
           <h1 className="text-3xl font-bold mb-2">Submit Your Resume</h1>
-          <p className="text-blue-100">
-            Join our talent network and take the next step in your career
-          </p>
+          <p className="text-blue-100">Join our talent network and take the next step in your career</p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-8 space-y-6">
@@ -168,11 +162,10 @@ const ResumeForm: React.FC = () => {
                 value={formData.firstname}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
                 placeholder="Enter your first name"
               />
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 <User className="w-4 h-4 inline mr-2" />
@@ -184,7 +177,7 @@ const ResumeForm: React.FC = () => {
                 value={formData.lastname}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
                 placeholder="Enter your last name"
               />
             </div>
@@ -201,7 +194,7 @@ const ResumeForm: React.FC = () => {
               value={formData.email}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               placeholder="Enter your email address"
             />
           </div>
@@ -213,28 +206,25 @@ const ResumeForm: React.FC = () => {
                 Country Code
               </label>
               <input
-                type="text"
+                type="number"
                 name="phonenumber_prefix"
                 value={formData.phonenumber_prefix}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="+1"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                placeholder="+91"
               />
             </div>
-
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Phone Number
-              </label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
               <input
-                type="text"
+                type="number"
                 name="phonenumber_number"
                 value={formData.phonenumber_number}
                 onChange={handleInputChange}
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                placeholder="Enter your phone number"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg"
+                placeholder="9876543210"
               />
             </div>
           </div>
@@ -250,7 +240,7 @@ const ResumeForm: React.FC = () => {
               value={formData.location}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               placeholder="Enter your location"
             />
           </div>
@@ -266,7 +256,7 @@ const ResumeForm: React.FC = () => {
               value={formData.preferredDesignation}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg"
               placeholder="Enter your preferred job title"
             />
           </div>
@@ -276,21 +266,17 @@ const ResumeForm: React.FC = () => {
               <Upload className="w-4 h-4 inline mr-2" />
               Resume (PDF)
             </label>
-            <div className="relative">
-              <input
-                type="file"
-                name="resume"
-                accept="application/pdf"
-                onChange={handleFileChange}
-                required
-                className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-              />
-              {formData.resume && (
-                <p className="mt-2 text-sm text-gray-600">
-                  Selected: {formData.resume.name}
-                </p>
-              )}
-            </div>
+            <input
+              type="file"
+              name="resume"
+              accept="application/pdf"
+              onChange={handleFileChange}
+              required
+              className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg"
+            />
+            {formData.resume && (
+              <p className="mt-2 text-sm text-gray-600">Selected: {formData.resume.name}</p>
+            )}
           </div>
 
           {error && (

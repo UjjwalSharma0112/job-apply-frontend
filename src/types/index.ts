@@ -2,8 +2,8 @@ export interface ResumeFormData {
   firstname: string;
   lastname: string;
   email: string;
-  phonenumber_prefix: string;
-  phonenumber_number: string;
+  phonenumber_prefix: number;
+  phonenumber_number: number;
   location: string;
   preferredDesignation: string;
   resume: File | null;
@@ -14,8 +14,8 @@ export interface UserData {
   lastname: string;
   email: string;
   phonenumber: {
-    prefix: string;
-    number: string;
+    prefix: number;
+    number: number;
   };
   location: string;
   preferredDesignation: string;
